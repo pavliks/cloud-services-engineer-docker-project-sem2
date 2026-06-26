@@ -21,4 +21,7 @@ COPY --from=builder --chown=101:101 /app/dist /usr/share/nginx/html
 
 USER 101
 
+HEALTHCHECK --interval=30s --timeout=4s --start-period=15s --retries=4 \
+    CMD wget -qO- http://127.0.0.1:8080/health >/dev/null || exit 1
+    
 EXPOSE 8080
