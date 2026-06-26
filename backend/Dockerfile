@@ -1,4 +1,7 @@
-FROM golang:1.26-alpine3.24 AS builder
+ARG GO_VERSION=1.26
+ARG ALPINE_VERSION=3.24
+
+FROM golang:${GO_VERSION}-alpine${ALPINE_VERSION} AS builder
 
 WORKDIR /src
 
@@ -14,7 +17,7 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build \
     -ldflags="-s -w" \
     -o /out/momo-backend ./cmd/api
 
-FROM alpine:3.24
+FROM alpine:${ALPINE_VERSION}
 
 RUN addgroup -S app && adduser -S -G app -H -h /app app \
     && mkdir -p /app \
