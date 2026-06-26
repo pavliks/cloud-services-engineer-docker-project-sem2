@@ -25,4 +25,7 @@ USER app
 
 EXPOSE 8081
 
+HEALTHCHECK --interval=30s --timeout=4s --start-period=15s --retries=4 \
+    CMD wget -qO- http://127.0.0.1:8081/health >/dev/null || exit 1
+    
 ENTRYPOINT ["/app/momo-backend"]
