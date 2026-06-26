@@ -9,6 +9,7 @@ COPY . .
 
 ENV NODE_ENV=production
 ENV NODE_OPTIONS=--openssl-legacy-provider
+ENV VUE_APP_API_URL=http://localhost:8081
 
 RUN npm run build
 
