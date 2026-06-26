@@ -15,9 +15,8 @@ FROM alpine:3.24
 
 RUN addgroup -S app && adduser -S -G app -H -h /app app \
     && mkdir -p /app \
-    && chown -R app:app /app
-
-RUN apk add --no-cache ca-certificates
+    && chown -R app:app /app \
+    && apk add --no-cache ca-certificates 
 
 WORKDIR /app
 
