@@ -68,6 +68,8 @@ services:
         condition: service_healthy
     ports:
       - "80:8080"
+    volumes:
+      - frontend_cache:/var/cache/nginx
     networks:
       - frontend
     read_only: true
