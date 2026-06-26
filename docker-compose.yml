@@ -67,7 +67,7 @@ services:
     ports:
       - "80:8080"
     networks:
-      - app
+      - frontend
     read_only: true
     tmpfs:
       - /tmp:noexec,nosuid,size=16m
@@ -86,6 +86,7 @@ services:
       start_period: 15s
 
 networks:
-  app:
+  frontend:
     driver: bridge
+    internal: false
     
