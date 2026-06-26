@@ -85,6 +85,43 @@ services:
       retries: 4
       start_period: 15s
 
+  frontend-dev:
+    profiles:
+      - dev
+    image: momo-store-frontend-dev:local
+    build:
+      context: ./frontend
+      target: dev
+    restart: unless-stopped
+    depends_on:
+      backend-lb:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./frontend/src:/app/src:ro
+      - ./frontend/public:/app/public:ro
+      - ./frontend/babel.config.js:/app/babel.config.js:ro
+      - ./frontend/tsconfig.json:/app/tsconfig.json:ro
+      - ./frontend/vue.config.js:/app/vue.config.js:ro
+    networks:
+      - frontend
+    tmpfs:
+      - /tmp:noexec,nosuid,size=64m
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 128
+    mem_limit: 512m
+    cpus: 1.00
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8080/"]
+      interval: 30s
+      timeout: 4s
+      retries: 4
+      start_period: 30s
+
 volumes:
   frontend_cache:
   backend_lb_cache:
