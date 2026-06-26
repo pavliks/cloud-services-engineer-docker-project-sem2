@@ -37,6 +37,8 @@ services:
     restart: unless-stopped
     expose:
       - "8081"
+    secrets:
+      - app_secret
     networks:
       - backend
     read_only: true
@@ -135,3 +137,8 @@ networks:
   backend:
     driver: bridge
     internal: true
+
+secrets:
+  app_secret:
+    file: ./secrets/app_secret.txt
+    
