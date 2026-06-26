@@ -43,6 +43,31 @@ jobs:
       - name: Build via Docker Compose
         uses: hoverkraft-tech/compose-action@v2.2.0
 
+  compose_status_check:
+    name: Verify status via Docker Compose
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Create app secret
+        run: |
+          mkdir -p secrets
+          printf '%s' "${{ secrets.APP_SECRET }}" > secrets/app_secret.txt
+          printf 'APP_SECRET_FILE=%s\n' './secrets/app_secret.txt' >> "$GITHUB_ENV"
+      - name: Start and wait until healthy
+        run: docker compose up -d --build --wait --wait-timeout 180
+      - name: Show status
+        if: always()
+        run: docker compose ps
+      - name: Dump logs on failure
+        if: failure()
+        run: docker compose logs --no-color
+      - name: Tear down
+        if: always()
+        run: docker compose down -v
+        
   security_scan:
     name: Scan Docker images
     runs-on: ubuntu-latest
