@@ -85,6 +85,10 @@ services:
       retries: 4
       start_period: 15s
 
+volumes:
+  frontend_cache:
+  backend_lb_cache:
+
 networks:
   frontend:
     driver: bridge
