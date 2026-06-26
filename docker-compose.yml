@@ -35,10 +35,10 @@ services:
     build:
       context: ./backend
     restart: unless-stopped
-    ports:
-      - "8081:8081"
+    expose:
+      - "8081"
     networks:
-      - app
+      - backend
     read_only: true
     tmpfs:
       - /tmp:noexec,nosuid,size=16m
@@ -93,4 +93,6 @@ networks:
   frontend:
     driver: bridge
     internal: false
-    
+  backend:
+    driver: bridge
+    internal: true
