@@ -98,6 +98,8 @@ services:
         condition: service_healthy
     ports:
       - "8080:8080"
+    environment:
+      VUE_APP_API_URL: http://localhost:8081
     volumes:
       - ./frontend/src:/app/src:ro
       - ./frontend/public:/app/public:ro
