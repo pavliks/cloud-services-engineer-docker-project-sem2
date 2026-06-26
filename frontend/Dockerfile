@@ -7,6 +7,9 @@ RUN npm ci
 
 COPY . .
 
+ENV NODE_ENV=production
+ENV NODE_OPTIONS=--openssl-legacy-provider
+
 RUN npm run build
 
 FROM nginxinc/nginx-unprivileged:1.31.2-alpine3.23
