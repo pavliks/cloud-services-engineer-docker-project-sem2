@@ -21,3 +21,4 @@ COPY --from=builder /out/momo-backend /app/momo-backend
 EXPOSE 8081
 
 ENTRYPOINT ["/app/momo-backend"]
+
