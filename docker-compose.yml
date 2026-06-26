@@ -62,7 +62,7 @@ services:
       context: ./frontend
     restart: unless-stopped
     depends_on:
-      backend:
+      backend-lb:
         condition: service_healthy
     ports:
       - "80:8080"
