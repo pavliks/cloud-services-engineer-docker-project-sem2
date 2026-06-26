@@ -13,7 +13,7 @@ RUN GOOS=linux GOARCH=amd64 go build -o /out/momo-backend ./cmd/api
 
 FROM alpine:3.24
 
-RUN addgroup -S app && mkdir -p /app && chown -R app:app /app
+RUN addgroup -S app && adduser -S -G app -H -h /app app && mkdir -p /app && chown -R app:app /app
 
 RUN apk add --no-cache ca-certificates mkdir -p /app 
 WORKDIR /app
